@@ -11,9 +11,12 @@ import { registerCompany } from "../services/apiService";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { Link, useNavigate } from "react-router-dom";
+import useAuthRedirect from "../hooks/useAuthRedirect";
 
 const SignUp = () => {
   const navigate = useNavigate();
+
+  useAuthRedirect("/dashboard");
 
   const formik = useFormik({
     initialValues: {

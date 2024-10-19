@@ -47,6 +47,10 @@ const OtpVerification = () => {
         });
       }
 
+      if (response.data.userName) {
+        localStorage.setItem("userName", userName);
+      }
+
       if (type === "email") {
         setEmailOTP("");
         setEmailOTPStatus("verified");

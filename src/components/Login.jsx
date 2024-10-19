@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import { toast } from "react-hot-toast";
 import { EnvelopeIcon, LockClosedIcon } from "@heroicons/react/24/outline";
 import { sendOtpAPI } from "../services/apiService";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
+import useAuthRedirect from "../hooks/useAuthRedirect";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -17,6 +18,9 @@ const Login = () => {
   const [otpError, setOtpError] = useState("");
 
   const [token, setToken] = useState("");
+  const [userName, setUserName] = useState("");
+
+  useAuthRedirect("/dashboard");
 
   const validateEmail = (email) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -54,6 +58,7 @@ const Login = () => {
 
         console.log(response.data);
 
+        setUserName(response.data.userName);
         setToken(response.data.token);
         setServerOtp(`${response.data.otp}`);
         setOtpSent(true);
@@ -74,6 +79,10 @@ const Login = () => {
             sameSite: "Strict",
             expires: 1,
           });
+        }
+
+        if (userName) {
+          localStorage.setItem("userName", userName);
         }
         navigate("/dashboard");
       } else {
@@ -139,6 +148,12 @@ const Login = () => {
                 {otpSent ? "Verify OTP" : "Send OTP"}
               </button>
             </form>
+            <p className="text-xs text-gray-500 mt-4">
+              Already a user?
+              <Link to="/" className="text-blue-600 hover:underline">
+                SignUp
+              </Link>
+            </p>
           </div>
         </div>
       </div>

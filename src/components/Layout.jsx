@@ -1,10 +1,23 @@
 import React from "react";
-import { HomeIcon, ChevronDownIcon } from "@heroicons/react/24/outline";
-import { Link } from "react-router-dom";
+import { HomeIcon } from "@heroicons/react/24/outline";
+import { Link, useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
+import { logout as logoutAPI } from "../services/apiService"; // Import your logout function
 
 const Layout = ({ children }) => {
   const token = Cookies.get("company");
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    try {
+      await logoutAPI();
+      Cookies.remove("company");
+      navigate("/login");
+    } catch (error) {
+      console.error("Logout failed:", error);
+    }
+  };
+
   return (
     <div className="max-h-screen bg-gray-100 overflow-hidden">
       <header
@@ -24,10 +37,12 @@ const Layout = ({ children }) => {
             </Link>
             {token && (
               <div className="relative border p-1 border-gray-400 rounded-md">
-                <button className="flex items-center space-x-2 text-gray-700 hover:text-gray-900 focus:outline-none">
+                <button
+                  className="flex gap-2 items-center space-x-2 text-gray-700 hover:text-gray-900 focus:outline-none"
+                  onClick={handleLogout} // Call the handleLogout function on click
+                >
                   <div className="w-6 h-6 bg-gray-300 rounded-full"></div>
-                  <span>Your Name</span>
-                  <ChevronDownIcon className="w-5 h-5" />
+                  Logout
                 </button>
               </div>
             )}

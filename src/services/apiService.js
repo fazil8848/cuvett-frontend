@@ -19,6 +19,7 @@ export const registerCompany = (data) => API.post("/auth/register", data);
 export const verifyOtp = (data) => API.post("/auth/verify_otp", data);
 export const loginCompany = (data) => API.post("/auth/login", data);
 export const sendOtpAPI = (data) => API.post("/auth/sendOTP", data);
+export const logout = () => API.post("/auth/logout");
 
 export const getJobsAPI = () => API.get(`/jobs/get-jobs`);
 export const createJobAPI = (data) => API.post("/jobs/add-new-job", data);
