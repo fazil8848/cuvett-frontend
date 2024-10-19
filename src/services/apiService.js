@@ -4,7 +4,7 @@ import Cookies from "js-cookie";
 const apiUrl = import.meta.env.VITE_API_URL;
 
 const API = axios.create({
-  baseURL: apiUrl || "http://localhost:5000/api",
+  baseURL: apiUrl || "https://cuvett-backend.onrender.com/",
 });
 
 API.interceptors.request.use((req) => {
