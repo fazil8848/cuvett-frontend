@@ -48,7 +48,7 @@ const OtpVerification = () => {
       }
 
       if (response.data.userName) {
-        localStorage.setItem("userName", userName);
+        localStorage.setItem("userName", response.data.userName);
       }
 
       if (type === "email") {
